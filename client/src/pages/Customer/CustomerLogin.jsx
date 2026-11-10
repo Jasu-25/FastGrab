@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { CircleCheck, Mail } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Mail } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
 import PasswordInput from '../../components/PasswordInput.jsx'
 import { AppleIcon, GoogleIcon } from '../../components/BrandIcons.jsx'
@@ -24,7 +23,7 @@ function CustomerLogin() {
     password: '',
     remember: false,
   })
-  const [submitted, setSubmitted] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -32,7 +31,7 @@ function CustomerLogin() {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
     // TODO: POST /api/auth/customer/login
-    setSubmitted(true)
+    navigate('/customer/explore')
   }
 
   return (
@@ -75,12 +74,6 @@ function CustomerLogin() {
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Log in to your account to start grabbing.</p>
 
-          {submitted && (
-            <div className="form-alert form-alert--success" role="status">
-              <CircleCheck size={18} />
-              Details look good. Login will work once the API is connected.
-            </div>
-          )}
 
           <Field label="Email Address" htmlFor="login-email" error={errors.email}>
             <InputWithIcon icon={Mail}>

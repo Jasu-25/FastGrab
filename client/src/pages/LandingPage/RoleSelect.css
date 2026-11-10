@@ -1,51 +1,78 @@
 /* =========================================================
    Role selection ("How will you use FastGrab?")
+   Sized to fit a laptop screen (~650px tall) without scrolling.
    ========================================================= */
 .role-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
-  padding: 96px var(--gutter) 64px;
+  min-height: 100dvh;
+  padding: 24px var(--gutter);
   background:
     radial-gradient(circle at 100% 0%, rgba(19, 184, 134, 0.08), transparent 35%),
     var(--color-bg);
+}
+
+.role-page__back {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.role-page__back:hover {
+  border-color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 .role-page__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1030px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 860px;
   text-align: center;
 }
 
 .role-page__title {
-  margin-top: 36px;
-  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  margin-top: 18px;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-primary);
 }
 
 .role-page__subtitle {
-  margin-top: 12px;
-  font-size: 18px;
+  margin-top: 6px;
+  font-size: 16px;
   color: var(--color-text-muted);
 }
 
 .role-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  gap: 20px;
   width: 100%;
-  margin-top: 56px;
+  margin-top: 28px;
 }
 
 .role-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 36px;
+  padding: 22px 24px;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-xl);
   background: var(--color-surface);
@@ -59,17 +86,36 @@
 
 .role-card.is-active {
   border-color: var(--color-accent);
-  box-shadow: 0 16px 40px rgba(19, 184, 134, 0.14);
+  box-shadow: 0 14px 36px rgba(19, 184, 134, 0.14);
+}
+
+.role-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.role-card__icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.role-card--merchant .role-card__icon {
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 .role-card__radio {
-  position: absolute;
-  top: 28px;
-  right: 28px;
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border: 2px solid var(--color-border-strong);
   border-radius: 50%;
   color: var(--color-white);
@@ -80,45 +126,30 @@
   background: var(--color-accent);
 }
 
-.role-card__icon {
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  margin-bottom: 44px;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-}
-
-.role-card--merchant .role-card__icon {
-  background: var(--color-primary);
-  color: var(--color-white);
-}
-
 .role-card__title {
-  font-size: 28px;
+  margin-top: 16px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--color-primary);
 }
 
 .role-card__desc {
-  margin-top: 10px;
-  font-size: 16px;
+  margin-top: 4px;
+  font-size: 14px;
   color: var(--color-text-muted);
 }
 
 .role-card__features {
   display: grid;
-  gap: 10px;
-  margin-top: 28px;
+  gap: 6px;
+  margin-top: 14px;
 }
 
 .role-card__feature {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-primary);
 }
@@ -129,37 +160,71 @@
 }
 
 .role-page__cta {
-  min-width: 320px;
-  margin-top: 48px;
+  min-width: 300px;
+  margin-top: 28px;
+  padding: 15px 28px;
 }
 
 .role-page__new {
-  margin-top: 32px;
+  margin-top: 16px;
+  font-size: 15px;
   color: var(--color-text-muted);
 }
 
-.role-page__create {
-  margin-top: 4px;
-  font-size: 18px;
+/* Short laptop screens: tighten spacing so nothing scrolls */
+@media (max-height: 640px) and (min-width: 721px) {
+  .role-page__title {
+    margin-top: 10px;
+    font-size: 2rem;
+  }
+
+  .role-grid {
+    margin-top: 18px;
+  }
+
+  .role-card {
+    padding: 16px 20px;
+  }
+
+  .role-card__title {
+    margin-top: 10px;
+    font-size: 20px;
+  }
+
+  .role-page__cta {
+    margin-top: 18px;
+    padding: 13px 28px;
+  }
+
+  .role-page__new {
+    margin-top: 10px;
+  }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 720px) {
   .role-page {
-    padding-top: 56px;
+    align-items: flex-start;
+    padding-top: 72px;
+  }
+
+  .role-page__back {
+    top: 16px;
+    left: 16px;
   }
 
   .role-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 36px;
+    gap: 14px;
+    margin-top: 22px;
   }
 
   .role-card {
-    padding: 28px 24px;
+    padding: 18px;
   }
 
-  .role-card__icon {
-    margin-bottom: 28px;
+  .role-card__title {
+    margin-top: 12px;
+    font-size: 19px;
   }
 
   .role-page__cta {

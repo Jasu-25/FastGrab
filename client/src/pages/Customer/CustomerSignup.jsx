@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { CircleCheck, Clock, Gift, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Clock, Gift, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
 import PasswordInput from '../../components/PasswordInput.jsx'
 import { AppleIcon, GoogleIcon } from '../../components/BrandIcons.jsx'
 import { Field, InputWithIcon } from '../../components/FormField.jsx'
 import { inputClass } from '../../utils/inputClass.js'
 import useForm from '../../hooks/useForm.js'
+import { useCustomer } from '../../context/customerContext.js'
 import {
   isEmail,
   isIndianPhone,
@@ -44,7 +44,8 @@ function CustomerSignup() {
     password: '',
     agree: false,
   })
-  const [submitted, setSubmitted] = useState(false)
+  const navigate = useNavigate()
+  const { updateUser } = useCustomer()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -52,7 +53,15 @@ function CustomerSignup() {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
     // TODO: POST /api/auth/customer/register
-    setSubmitted(true)
+    updateUser({
+      firstName: values.firstName.trim(),
+      lastName: values.lastName.trim(),
+      email: values.email.trim(),
+      phone: values.phone.trim(),
+      memberSince: new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }),
+      pickups: 0,
+    })
+    navigate('/customer/explore')
   }
 
   return (
@@ -66,12 +75,6 @@ function CustomerSignup() {
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">Join FastGrab and start saving time on your daily essentials.</p>
 
-          {submitted && (
-            <div className="form-alert form-alert--success" role="status">
-              <CircleCheck size={18} />
-              Details look good. Sign-up will work once the API is connected.
-            </div>
-          )}
 
           <div className="form-row">
             <Field label="First Name" htmlFor="su-first" error={errors.firstName}>

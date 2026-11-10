@@ -1,0 +1,77 @@
+.reco-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 36px 40px;
+  border-radius: var(--radius-xl);
+  color: var(--color-white);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(63, 217, 160, 0.22), transparent 45%),
+    linear-gradient(150deg, var(--color-primary), var(--color-primary-deep));
+}
+
+.reco-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-accent-on-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reco-hero h1 {
+  margin-top: 14px;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.reco-hero p {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.reco-section {
+  margin-top: 44px;
+}
+
+.reco-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.reco-title svg {
+  color: var(--color-accent);
+}
+
+.reco-stores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.reco-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 560px) {
+  .reco-hero {
+    padding: 28px 22px;
+  }
+
+  .reco-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}

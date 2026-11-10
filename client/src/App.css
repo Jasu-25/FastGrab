@@ -145,6 +145,15 @@ button {
   outline-offset: 2px;
 }
 
+/* Colour tones for icons, logos and placeholder images */
+.tone-green { background: var(--cat-green-bg); color: var(--cat-green); }
+.tone-orange { background: var(--cat-orange-bg); color: var(--cat-orange); }
+.tone-blue { background: var(--cat-blue-bg); color: var(--cat-blue); }
+.tone-red { background: var(--cat-red-bg); color: var(--cat-red); }
+.tone-purple { background: var(--cat-purple-bg); color: var(--cat-purple); }
+.tone-teal { background: var(--color-accent-soft); color: var(--color-primary); }
+.tone-neutral { background: var(--color-surface-muted); color: var(--color-text-muted); }
+
 /* =========================================================
    Logo
    ========================================================= */

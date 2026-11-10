@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowRight, Check, CircleCheck, ShoppingBasket, Store } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, CircleCheck, ShoppingBasket, Store } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
 import './RoleSelect.css'
 
@@ -30,8 +30,12 @@ function RoleSelect() {
 
   return (
     <main className="role-page">
+      <Link to="/" className="role-page__back">
+        <ArrowLeft size={18} /> Back to home
+      </Link>
+
       <div className="role-page__inner">
-        <Logo size="lg" />
+        <Logo />
 
         <h1 className="role-page__title">How will you use FastGrab?</h1>
         <p className="role-page__subtitle">Choose your account type to continue.</p>
@@ -48,18 +52,20 @@ function RoleSelect() {
                 className={`role-card role-card--${id}${isActive ? ' is-active' : ''}`}
                 onClick={() => setRole(id)}
               >
-                <span className="role-card__radio" aria-hidden="true">
-                  {isActive && <Check size={16} strokeWidth={3} />}
-                </span>
-                <span className="role-card__icon">
-                  <Icon size={30} />
+                <span className="role-card__top">
+                  <span className="role-card__icon">
+                    <Icon size={24} />
+                  </span>
+                  <span className="role-card__radio" aria-hidden="true">
+                    {isActive && <Check size={14} strokeWidth={3} />}
+                  </span>
                 </span>
                 <span className="role-card__title">{title}</span>
                 <span className="role-card__desc">{description}</span>
                 <span className="role-card__features">
                   {features.map((f) => (
                     <span key={f} className="role-card__feature">
-                      <CircleCheck size={18} aria-hidden="true" />
+                      <CircleCheck size={16} aria-hidden="true" />
                       {f}
                     </span>
                   ))}
@@ -77,10 +83,12 @@ function RoleSelect() {
           Continue as {selected.label} <ArrowRight size={20} />
         </button>
 
-        <p className="role-page__new">New here?</p>
-        <Link to={`/${role}/signup`} className="link role-page__create">
-          {role === 'merchant' ? 'Register your shop' : 'Create an account'}
-        </Link>
+        <p className="role-page__new">
+          New here?{' '}
+          <Link to={`/${role}/signup`} className="link">
+            {role === 'merchant' ? 'Register your shop' : 'Create an account'}
+          </Link>
+        </p>
       </div>
     </main>
   )

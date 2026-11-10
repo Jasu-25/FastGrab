@@ -71,11 +71,15 @@ FastGrab/
 │   │   ├── App.css          # global color variables + shared styles
 │   │   ├── main.jsx
 │   │   ├── components/      # Logo, FormField, PasswordInput, BrandIcons
-│   │   ├── hooks/useForm.js
-│   │   ├── utils/           # validators (email, phone, PAN, GSTIN, IFSC…), inputClass
+│   │   ├── context/         # CustomerProvider: user, cart, pickup slots, orders (mock, saved in localStorage)
+│   │   ├── data/mockData.js # stores, products, orders (until the API exists)
+│   │   ├── hooks/           # useForm, usePersistentState
+│   │   ├── utils/           # validators, price/date formatting, pickup slot helpers
 │   │   └── pages/
 │   │       ├── LandingPage/ # /  and  /get-started (role select)
-│   │       ├── Customer/    # /customer/login, /customer/signup
+│   │       ├── Customer/    # login, signup + app pages:
+│   │       │                #   /customer/explore, /recommended, /store/:id, /orders, /orders/:id,
+│   │       │                #   /settings, /cart, /checkout/pickup, /checkout/payment
 │   │       └── Merchant/    # /merchant/login, /merchant/signup (3 steps)
 │   ├── index.html
 │   ├── vite.config.js   # dev server on :5173, proxies /api → :5000

@@ -1,0 +1,178 @@
+/* =========================================================
+   Customer auth pages (login + sign up)
+   ========================================================= */
+
+/* ---------- Login: dark left panel ---------- */
+.customer-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 520px;
+  text-align: center;
+}
+
+.customer-panel__title {
+  margin-top: 40px;
+  font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+  font-weight: 400;
+  color: var(--color-white);
+}
+
+.customer-panel__text {
+  margin-top: 24px;
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--color-accent-on-dark);
+}
+
+.testimonial {
+  width: 100%;
+  margin: 56px 0 0;
+  padding: 32px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.06);
+  text-align: left;
+}
+
+.testimonial__person {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.testimonial__person strong {
+  display: block;
+  font-size: 17px;
+  color: var(--color-white);
+}
+
+.testimonial__person small {
+  display: block;
+  font-size: 13px;
+  color: var(--color-accent-on-dark);
+}
+
+.testimonial__avatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--color-accent-on-dark);
+  border-radius: 50%;
+  background: #f7c59f;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.testimonial blockquote {
+  margin: 24px 0 0;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.auth-remember {
+  margin: 4px 0 32px;
+  font-size: 15px;
+}
+
+.field__action {
+  font-size: 13px;
+}
+
+/* ---------- Sign up ---------- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.auth-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  border-left: 1px solid var(--color-border);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(19, 184, 134, 0.1), transparent 40%),
+    var(--color-bg);
+}
+
+.promo-card {
+  width: 100%;
+  max-width: 512px;
+  padding: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.promo-card__icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.promo-card h2 {
+  margin-top: 40px;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.promo-card p {
+  margin-top: 18px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.promo-card__perks {
+  display: grid;
+  gap: 18px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.promo-card__perks li {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.promo-card__perks li span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 960px) {
+  .auth-side {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

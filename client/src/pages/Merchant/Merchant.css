@@ -1,0 +1,463 @@
+/* =========================================================
+   Merchant pages (login + 3-step sign up)
+   ========================================================= */
+
+/* ---------- Login: dark left panel ---------- */
+.merchant-panel {
+  max-width: 460px;
+}
+
+.merchant-panel__title {
+  margin-top: 40px;
+  font-size: clamp(1.9rem, 2.8vw, 2.5rem);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.merchant-panel__text {
+  margin-top: 16px;
+  font-size: 17px;
+  color: var(--color-accent-on-dark);
+}
+
+.merchant-panel__list {
+  display: grid;
+  gap: 18px;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.merchant-panel__list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.merchant-panel__list span {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-accent-on-dark);
+}
+
+.merchant-remember {
+  margin: 4px 0 32px;
+}
+
+.merchant-alt {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Sign up: page shell ---------- */
+.merchant-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.merchant-topbar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.merchant-topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 72px;
+}
+
+.merchant-topbar p {
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+.merchant-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 376px;
+  align-items: start;
+  gap: 44px;
+  padding-top: 52px;
+  padding-bottom: 64px;
+}
+
+.merchant-title {
+  font-size: clamp(1.9rem, 3vw, 2.25rem);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.merchant-subtitle {
+  margin-top: 8px;
+  font-size: 17px;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Stepper ---------- */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin: 36px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.stepper__item {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.stepper__item:last-child {
+  flex: 0 0 auto;
+}
+
+/* connecting line after every step except the last */
+.stepper__item:not(:last-child)::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  margin: 0 14px;
+  border-radius: 2px;
+  background: var(--color-border);
+}
+
+.stepper__item.is-done::after {
+  background: var(--color-accent);
+}
+
+.stepper__btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  white-space: nowrap;
+}
+
+.stepper__btn:disabled {
+  cursor: default;
+}
+
+.stepper__dot {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.stepper__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.is-done .stepper__dot {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+.is-done .stepper__label {
+  color: var(--color-primary);
+}
+
+.is-current .stepper__dot {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.is-current .stepper__label {
+  color: var(--color-primary);
+}
+
+/* ---------- Form card ---------- */
+.merchant-card {
+  padding: 40px 36px 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.merchant-section-title {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.merchant-section-text {
+  margin: -12px 0 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.merchant-divider {
+  margin: 12px 0 32px;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 22px;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.merchant-card .field__label {
+  font-size: 13px;
+  color: var(--color-text-body);
+}
+
+/* ---------- File upload ---------- */
+.upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 18px;
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.upload svg {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.upload span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload:hover,
+.upload:focus-within {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.upload--done {
+  border-style: solid;
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.upload--error {
+  border-color: var(--color-error);
+}
+
+/* ---------- Actions ---------- */
+.merchant-agree {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.merchant-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.merchant-actions__next {
+  flex: 1;
+}
+
+/* ---------- Success state ---------- */
+.merchant-success {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.merchant-success__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.merchant-success h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: var(--color-primary);
+}
+
+.merchant-success p {
+  max-width: 440px;
+  margin: 12px auto 28px;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Right column ---------- */
+.merchant-aside {
+  display: grid;
+  gap: 24px;
+  position: sticky;
+  top: 24px;
+}
+
+.why-card {
+  padding: 36px 34px;
+  border-radius: var(--radius-xl);
+  color: var(--color-white);
+  background: linear-gradient(160deg, var(--color-primary), var(--color-primary-deep));
+}
+
+.why-card__eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-on-dark);
+}
+
+.why-card h2 {
+  margin-top: 14px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--color-white);
+}
+
+.why-card ul {
+  display: grid;
+  gap: 18px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.why-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.why-card li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-accent-on-dark);
+}
+
+.merchant-quote {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+}
+
+.merchant-quote__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #e9d8c4;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.merchant-quote blockquote {
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-text-body);
+}
+
+.merchant-quote figcaption {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .merchant-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .merchant-aside {
+    position: static;
+    order: -1;
+  }
+
+  .merchant-quote {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .merchant-layout {
+    padding-top: 28px;
+  }
+
+  .merchant-topbar p {
+    font-size: 13px;
+  }
+
+  .merchant-card {
+    padding: 28px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid > div:empty {
+    display: none;
+  }
+
+  .stepper__label {
+    display: none;
+  }
+
+  .is-current .stepper__label {
+    display: inline;
+  }
+
+  .why-card {
+    padding: 28px 24px;
+  }
+
+  .why-card h2 {
+    font-size: 20px;
+  }
+}

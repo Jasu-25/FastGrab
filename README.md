@@ -67,10 +67,16 @@ FastGrab/
 ├── client/              # React + Vite frontend
 │   ├── public/
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css
-│   │   └── main.jsx
+│   │   ├── App.jsx          # routes
+│   │   ├── App.css          # global color variables + shared styles
+│   │   ├── main.jsx
+│   │   ├── components/      # Logo, FormField, PasswordInput, BrandIcons
+│   │   ├── hooks/useForm.js
+│   │   ├── utils/           # validators (email, phone, PAN, GSTIN, IFSC…), inputClass
+│   │   └── pages/
+│   │       ├── LandingPage/ # /  and  /get-started (role select)
+│   │       ├── Customer/    # /customer/login, /customer/signup
+│   │       └── Merchant/    # /merchant/login, /merchant/signup (3 steps)
 │   ├── index.html
 │   ├── vite.config.js   # dev server on :5173, proxies /api → :5000
 │   └── package.json

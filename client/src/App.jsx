@@ -1,34 +1,28 @@
-import './App.css'
-
-const steps = [
-  { title: 'Discover', text: 'Find nearby registered stores and browse their products.' },
-  { title: 'Order ahead', text: 'Add items to your cart and pick a pickup date and time slot.' },
-  { title: 'Shop prepares', text: 'The merchant confirms, packs, and marks your order ready.' },
-  { title: 'Grab & go', text: 'Show your QR code or order ID at the store and collect.' },
-]
+import { Navigate, Route, Routes } from 'react-router-dom'
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import RoleSelect from './pages/LandingPage/RoleSelect.jsx'
+import CustomerLogin from './pages/Customer/CustomerLogin.jsx'
+import CustomerSignup from './pages/Customer/CustomerSignup.jsx'
+import MerchantLogin from './pages/Merchant/MerchantLogin.jsx'
+import MerchantSignup from './pages/Merchant/MerchantSignup.jsx'
 
 function App() {
   return (
-    <main className="page">
-      <header className="hero">
-        <h1>FastGrab</h1>
-        <p className="tagline">Order ahead. Grab &amp; go.</p>
-        <p className="lead">
-          Pre-order from nearby stores and collect at your chosen pickup time,
-          skipping the shopping and billing queue.
-        </p>
-      </header>
+    <Routes>
+      {/* Landing */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/get-started" element={<RoleSelect />} />
 
-      <section className="steps">
-        {steps.map((step, i) => (
-          <article key={step.title} className="step">
-            <span className="step-num">{i + 1}</span>
-            <h2>{step.title}</h2>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </section>
-    </main>
+      {/* Customer */}
+      <Route path="/customer/login" element={<CustomerLogin />} />
+      <Route path="/customer/signup" element={<CustomerSignup />} />
+
+      {/* Merchant */}
+      <Route path="/merchant/login" element={<MerchantLogin />} />
+      <Route path="/merchant/signup" element={<MerchantSignup />} />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 

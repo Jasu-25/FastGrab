@@ -561,3 +561,91 @@ a.shop-group__name:hover {
     flex-wrap: wrap;
   }
 }
+
+/* ---------- Payment: order review ---------- */
+.review {
+  overflow: hidden;
+}
+
+.review__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.review__shop {
+  padding: 18px 22px;
+}
+
+.review__shop + .review__shop {
+  border-top: 1px dashed var(--color-border);
+}
+
+.review__store {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review__store > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.review__store strong {
+  display: block;
+  font-size: 15px;
+  color: var(--color-primary);
+}
+
+.review__store small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.review__store small svg {
+  color: var(--color-accent);
+}
+
+.review__total {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.review__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.review__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.review__item > span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: 14px;
+}
+
+.review__item small {
+  color: var(--color-text-faint);
+}

@@ -3,6 +3,7 @@ import { Heart, Plus } from 'lucide-react'
 import { useCustomer } from '../../../context/customerContext.js'
 import { formatPrice } from '../../../utils/format.js'
 import QtyStepper from './QtyStepper.jsx'
+import Photo from '../../../components/Photo.jsx'
 
 /** Product tile with add-to-cart / quantity stepper. */
 function ProductCard({ storeId, product, storeName }) {
@@ -13,9 +14,11 @@ function ProductCard({ storeId, product, storeName }) {
   return (
     <article className="product-card">
       <div className="product-card__media">
-        <span className="product-card__emoji" aria-hidden="true">
-          {product.emoji}
-        </span>
+        <Photo
+          src={product.image}
+          alt={product.name}
+          fallback={<span className="product-card__emoji">{product.emoji}</span>}
+        />
         <button
           type="button"
           className={`product-card__like${liked ? ' is-liked' : ''}`}

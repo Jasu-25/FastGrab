@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Check, CreditCard, Landmark, Lock, ShieldCheck, Smartphone } from 'lucide-react'
+import { ArrowLeft, CalendarClock, Check, CreditCard, Landmark, Lock, ShieldCheck, Smartphone } from 'lucide-react'
+import StoreLogo from '../components/StoreLogo.jsx'
+import { slotLabel } from '../../../utils/slots.js'
 import { useCustomer } from '../../../context/customerContext.js'
 import { Field } from '../../../components/FormField.jsx'
 import { inputClass } from '../../../utils/inputClass.js'
-import { formatPrice, pluralize } from '../../../utils/format.js'
+import { dayLabel, formatPrice, pluralize } from '../../../utils/format.js'
 import { isRequired, isUpiId } from '../../../utils/validators.js'
 import './Checkout.css'
+import Photo from '../../../components/Photo.jsx'
 
 const METHODS = [
   { id: 'upi', label: 'UPI', hint: 'Google Pay, PhonePe, Paytm or any UPI app', icon: Smartphone },
@@ -88,7 +91,7 @@ function Payment() {
         <ArrowLeft size={14} /> Back to pickup slots
       </Link>
 
-      <div className="checkout-layout checkout-layout--narrow">
+      <div className="checkout-layout">
         <div className="checkout-main">
           <div>
             <h1 className="page-title page-title--light">Secure Payment</h1>
@@ -160,6 +163,36 @@ function Payment() {
               })}
             </div>
           )}
+
+          <section className="card review">
+            <header className="review__head">
+              <h2 className="card-title">Review your pickups</h2>
+              <Link to="/customer/cart" className="link small">Edit cart</Link>
+            </header>
+            {cartGroups.map((g) => (
+              <div key={g.store.id} className="review__shop">
+                <div className="review__store">
+                  <StoreLogo store={g.store} size={40} />
+                  <div>
+                    <strong>{g.store.name}</strong>
+                    <small>
+                      <CalendarClock size={12} /> {dayLabel(g.slot.date)} · {slotLabel(g.slot.time)} · {g.store.counter}
+                    </small>
+                  </div>
+                  <span className="review__total">{formatPrice(g.subtotal)}</span>
+                </div>
+                <div className="review__items">
+                  {g.lines.map(({ product, qty }) => (
+                    <span key={product.id} className="review__item">
+                      <span aria-hidden="true"><Photo src={product.image} fallback={product.emoji} /></span>
+                      {product.name}
+                      <small>× {qty}</small>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
         </div>
 
         <aside className="card card-pad summary">

@@ -7,6 +7,7 @@ import { slotLabel } from '../../../utils/slots.js'
 import StoreLogo from '../components/StoreLogo.jsx'
 import QtyStepper from '../components/QtyStepper.jsx'
 import './Checkout.css'
+import Photo from '../../../components/Photo.jsx'
 
 function PromoForm() {
   const { applyPromo, promoApplied } = useCustomer()
@@ -120,7 +121,9 @@ function Cart() {
               <ul className="line-items">
                 {g.lines.map(({ product, qty, total }) => (
                   <li key={product.id} className="line-item">
-                    <span className="line-item__img" aria-hidden="true">{product.emoji}</span>
+                    <span className="line-item__img">
+                      <Photo src={product.image} alt={product.name} fallback={product.emoji} />
+                    </span>
                     <div className="line-item__info">
                       <strong>{product.name}</strong>
                       <small>{product.detail}</small>

@@ -8,6 +8,7 @@ import { nextSlotShort } from '../../../utils/slots.js'
 import StoreLogo from '../components/StoreLogo.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import './StoreDetails.css'
+import Photo from '../../../components/Photo.jsx'
 
 const SORTS = {
   featured: { label: 'Featured', fn: () => 0 },
@@ -35,7 +36,9 @@ function StoreCart({ store }) {
           <ul className="store-cart__list">
             {group.lines.map(({ product, qty }) => (
               <li key={product.id}>
-                <span className="store-cart__emoji" aria-hidden="true">{product.emoji}</span>
+                <span className="store-cart__emoji">
+                  <Photo src={product.image} alt={product.name} fallback={product.emoji} />
+                </span>
                 <span>
                   <strong>{product.name}</strong>
                   <small>
@@ -128,6 +131,9 @@ function StoreDetails() {
       <div className="store-layout">
         <div className="store-side">
           <section className="card card-pad store-info">
+            <div className="store-info__cover">
+              <Photo src={store.image} alt={`${store.name} storefront`} />
+            </div>
             <div className="store-info__top">
               <StoreLogo store={store} size={72} />
               <button

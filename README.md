@@ -109,6 +109,28 @@ Then open http://localhost:5173.
 
 Requests to `/api/*` from the frontend are proxied to `http://localhost:5000`, which is where the Express server will run.
 
+## Deployment
+
+The app is built automatically. **Never commit `client/dist`.**
+
+### GitHub Pages: https://jasu-25.github.io/FastGrab/
+
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) runs on every push to `main`. It installs dependencies, lints, builds with `VITE_BASE_PATH=/FastGrab/`, adds a `404.html` SPA fallback, and publishes `client/dist`.
+
+One-time setup: **Repo → Settings → Pages → Build and deployment → Source: GitHub Actions.**
+(If the source is "Deploy from a branch", GitHub shows this README instead of the app.)
+
+### Vercel
+
+[`vercel.json`](vercel.json) tells Vercel to build from `client/` and serve `client/dist`. It also rewrites all routes to `index.html` so deep links work.
+
+One-time setup: go to vercel.com → **Add New → Project** → import `Jasu-25/FastGrab` → keep **Root Directory** as `./` → **Deploy**.
+After that, every push to `main` deploys to production, and every pull request gets a preview URL.
+
+### Images
+
+Product and store photos come from [Unsplash](https://unsplash.com/license), which allows free use. They're listed in [`client/src/data/photos.js`](client/src/data/photos.js). If a photo fails to load, the app shows an icon instead.
+
 ## Roadmap
 
 **Phase 1: Validate.** Interview 15–20 shop owners and 40–50 customers in one locality.

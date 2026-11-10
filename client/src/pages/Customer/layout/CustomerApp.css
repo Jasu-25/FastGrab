@@ -863,3 +863,16 @@
     width: 100%;
   }
 }
+
+/* ---------- Wide-screen polish ---------- */
+/* A little more room on large screens */
+.cx .container {
+  max-width: calc(1240px + var(--gutter) * 2);
+}
+
+/* Soft brand-coloured band behind each page header */
+.cx-main {
+  background:
+    radial-gradient(ellipse 60% 260px at 85% 0%, rgba(19, 184, 134, 0.1), transparent 70%),
+    linear-gradient(180deg, #eaf6f0 0, var(--color-bg) 300px);
+}

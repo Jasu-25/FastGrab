@@ -594,3 +594,64 @@ select.input {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   Photos (see components/Photo.jsx)
+   ========================================================= */
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo--fallback {
+  display: grid;
+  place-items: center;
+}
+
+/* Frames that a photo fills edge to edge */
+.shop-card__media,
+.store-card__media,
+.product-card__media,
+.saved-shop__media,
+.line-item__img,
+.store-cart__emoji,
+.detail-item__img,
+.order-card__thumb,
+.review__item > span,
+.store-info__cover {
+  position: relative;
+  overflow: hidden;
+}
+
+:is(
+  .shop-card__media,
+  .store-card__media,
+  .product-card__media,
+  .saved-shop__media,
+  .line-item__img,
+  .store-cart__emoji,
+  .detail-item__img,
+  .order-card__thumb,
+  .review__item > span,
+  .store-info__cover
+) > .photo {
+  position: absolute;
+  inset: 0;
+}
+
+/* Gentle zoom on hover for card photos */
+:is(.shop-card, .store-card, .product-card) img.photo {
+  transition: transform 0.4s ease;
+}
+
+:is(.shop-card, .store-card, .product-card):hover img.photo {
+  transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.shop-card, .store-card, .product-card):hover img.photo {
+    transform: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Briefcase,
@@ -23,6 +23,7 @@ import { inputClass } from '../../../utils/inputClass.js'
 import { isEmail, isIndianPhone, isRequired, isStrongPassword } from '../../../utils/validators.js'
 import Avatar from '../components/Avatar.jsx'
 import { StoreIcon } from '../components/StoreLogo.jsx'
+import Photo from '../../../components/Photo.jsx'
 import './Settings.css'
 
 const LOCATION_TYPES = {
@@ -84,7 +85,7 @@ function PersonalDetails() {
   )
 
   return (
-    <form className="card card-pad settings-card" onSubmit={submit} noValidate>
+    <form id="profile" className="card card-pad settings-card settings-card--profile" onSubmit={submit} noValidate>
       <h2 className="card-title"><User size={18} /> Personal Details</h2>
 
       <div className="profile-row">
@@ -159,7 +160,7 @@ function SavedLocations() {
   }
 
   return (
-    <section className="card card-pad settings-card">
+    <section id="locations" className="card card-pad settings-card settings-card--locations">
       <div className="card-head">
         <h2 className="card-title"><MapPin size={18} /> Saved Locations</h2>
         {editing !== 'new' && (
@@ -221,7 +222,7 @@ function SavedShops() {
   const stores = savedShops.map(getStore).filter(Boolean)
 
   return (
-    <section className="card card-pad settings-card">
+    <section id="shops" className="card card-pad settings-card settings-card--shops">
       <div className="card-head">
         <h2 className="card-title card-title--heart"><Heart size={18} fill="currentColor" /> Saved Shops</h2>
         <Link to="/customer/explore" className="link small-link">Browse shops</Link>
@@ -231,7 +232,7 @@ function SavedShops() {
           {stores.map((s) => (
             <div key={s.id} className="saved-shop">
               <Link to={`/customer/store/${s.id}`} className={`saved-shop__media tone-${s.tone}`}>
-                <StoreIcon store={s} size={36} />
+                <Photo src={s.image} alt={`${s.name} storefront`} fallback={<StoreIcon store={s} size={36} />} />
               </Link>
               <div className="saved-shop__body">
                 <div>
@@ -284,7 +285,7 @@ function ChangePassword() {
   )
 
   return (
-    <form className="card card-pad settings-card" onSubmit={submit} noValidate>
+    <form id="security" className="card card-pad settings-card settings-card--security" onSubmit={submit} noValidate>
       <h2 className="card-title"><Lock size={18} /> Change Password</h2>
       <div className="settings-grid settings-grid--3">
         {pw('current', 'Current password', '••••••••', 'current-password')}
@@ -299,12 +300,48 @@ function ChangePassword() {
   )
 }
 
+const SECTIONS = [
+  { id: 'profile', label: 'Personal details', icon: User },
+  { id: 'locations', label: 'Saved locations', icon: MapPin },
+  { id: 'shops', label: 'Saved shops', icon: Heart },
+  { id: 'security', label: 'Password & security', icon: Lock },
+]
+
+/** Highlights the section currently in view. */
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0])
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActive(visible[0].target.id)
+      },
+      { rootMargin: '-90px 0px -55% 0px' },
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [ids])
+  return [active, setActive]
+}
+
+const SECTION_IDS = SECTIONS.map((s) => s.id)
+
 function Settings() {
-  const { logout } = useCustomer()
+  const { user, orders, savedShops, locations, logout } = useCustomer()
   const navigate = useNavigate()
+  const [active, setActive] = useActiveSection(SECTION_IDS)
+  const collected = orders.filter((o) => o.status === 'picked_up').length
+
+  const jump = (id) => {
+    setActive(id)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
-    <div className="container settings-page">
+    <div className="container">
       <div className="page-head">
         <div>
           <h1 className="page-title">Settings</h1>
@@ -312,28 +349,63 @@ function Settings() {
         </div>
       </div>
 
-      <div className="settings-stack">
-        <PersonalDetails />
-        <SavedLocations />
-        <SavedShops />
-        <ChangePassword />
+      <div className="settings-layout">
+        <aside className="settings-aside">
+          <section className="settings-profile">
+            <Avatar user={user} size={64} />
+            <h2>
+              {user.firstName} {user.lastName}
+            </h2>
+            <p>{user.email}</p>
+            <div className="settings-profile__stats">
+              <span>
+                <strong>{user.pickups + collected}</strong>
+                <small>Pickups</small>
+              </span>
+              <span>
+                <strong>{savedShops.length}</strong>
+                <small>Saved shops</small>
+              </span>
+              <span>
+                <strong>{locations.length}</strong>
+                <small>Places</small>
+              </span>
+            </div>
+          </section>
 
-        <section className="card card-pad logout-card">
-          <div>
-            <strong>Log out of FastGrab</strong>
-            <small>Active pickups stay saved to your account.</small>
-          </div>
-          <button
-            type="button"
-            className="btn logout-card__btn"
-            onClick={() => {
-              logout()
-              navigate('/')
-            }}
-          >
-            <LogOut size={16} /> Log out
-          </button>
-        </section>
+          <nav className="settings-nav" aria-label="Settings sections">
+            {SECTIONS.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                type="button"
+                className={`settings-nav__link${active === id ? ' is-active' : ''}`}
+                aria-current={active === id ? 'true' : undefined}
+                onClick={() => jump(id)}
+              >
+                <Icon size={17} />
+                {label}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="settings-nav__link settings-nav__link--danger"
+              onClick={() => {
+                logout()
+                navigate('/')
+              }}
+            >
+              <LogOut size={17} />
+              Log out
+            </button>
+          </nav>
+        </aside>
+
+        <div className="settings-grid-layout">
+          <PersonalDetails />
+          <SavedLocations />
+          <ChangePassword />
+          <SavedShops />
+        </div>
       </div>
     </div>
   )

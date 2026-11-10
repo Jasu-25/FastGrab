@@ -1,7 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, List, Map as MapIcon, MapPin, Search, SlidersHorizontal, Store } from 'lucide-react'
-import { STORES, STORE_FILTERS } from '../../../data/mockData.js'
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Gift,
+  List,
+  Map as MapIcon,
+  MapPin,
+  Search,
+  ShoppingBag,
+  SlidersHorizontal,
+  Store,
+} from 'lucide-react'
+import { STORES, STORE_FILTERS, getStore } from '../../../data/mockData.js'
+import { useCustomer } from '../../../context/customerContext.js'
+import { slotLabel } from '../../../utils/slots.js'
+import { isActiveOrder } from '../components/orderStatus.js'
 import StoreCard from '../components/StoreCard.jsx'
 import { StoreIcon } from '../components/StoreLogo.jsx'
 import './Explore.css'
@@ -85,7 +100,20 @@ function MapView({ stores }) {
   )
 }
 
+const nearest = [...STORES].sort((a, b) => a.distanceKm - b.distanceKm)[0]
+const fastest = [...STORES].sort((a, b) => a.prepMins - b.prepMins)[0]
+
+function getGreeting() {
+  const h = new Date().getHours()
+  if (h < 12) return 'Good morning'
+  if (h < 17) return 'Good afternoon'
+  return 'Good evening'
+}
+
 function Explore() {
+  const { user, orders } = useCustomer()
+  const [greeting] = useState(getGreeting)
+  const nextOrder = orders.find((o) => o.status === 'ready') ?? orders.find(isActiveOrder)
   const [filter, setFilter] = useState(STORE_FILTERS[0])
   const [query, setQuery] = useState('')
   const [view, setView] = useState('list')
@@ -112,24 +140,24 @@ function Explore() {
 
   return (
     <div className="container">
-      <div className="page-head">
-        <div>
-          <nav className="breadcrumb" aria-label="Breadcrumb">
+      <section className="explore-hero">
+        <div className="explore-hero__text">
+          <nav className="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
             <Link to="/customer/explore">Home</Link>/<span aria-current="page">Nearby stores</span>
           </nav>
-          <h1 className="page-title page-title--light">Discover Nearby</h1>
-          <p className="page-sub">
-            {results.length} shops found in <strong>Bengaluru, IN</strong>
+          <p className="explore-hero__greet">
+            {greeting}, {user.firstName} 👋
           </p>
-        </div>
-
-        <div className="explore-tools">
-          <label className="search-box">
-            <Search size={16} aria-hidden="true" />
+          <h1>Discover Nearby</h1>
+          <p className="explore-hero__sub">
+            {results.length} shops found in <strong>Bengaluru, IN</strong> · ready in as little as 10 minutes
+          </p>
+          <label className="explore-hero__search">
+            <Search size={20} aria-hidden="true" />
             <span className="sr-only">Search stores</span>
             <input
               type="search"
-              placeholder="Search stores or items..."
+              placeholder="Search stores, items or categories..."
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value)
@@ -137,6 +165,67 @@ function Explore() {
               }}
             />
           </label>
+        </div>
+
+        <div className="explore-hero__side">
+          {nextOrder ? (
+            <Link to={`/customer/orders/${nextOrder.id}`} className="hero-order">
+              <span className="hero-order__icon">
+                <ShoppingBag size={20} />
+              </span>
+              <span className="hero-order__text">
+                <small>{nextOrder.status === 'ready' ? 'Ready for pickup' : 'Your next pickup'}</small>
+                <strong>{getStore(nextOrder.storeId).name}</strong>
+                <span>Window {slotLabel(nextOrder.slot)}</span>
+              </span>
+              <ArrowRight size={18} />
+            </Link>
+          ) : (
+            <div className="hero-order">
+              <span className="hero-order__icon">
+                <Gift size={20} />
+              </span>
+              <span className="hero-order__text">
+                <small>New here?</small>
+                <strong>First pickup deposit-free</strong>
+                <span>Use code FIRSTFREE at checkout</span>
+              </span>
+            </div>
+          )}
+          <div className="hero-stats">
+            <span>
+              <strong>{nearest.distanceKm} km</strong>
+              <small>Nearest shop</small>
+            </span>
+            <span>
+              <strong>{fastest.prepMins} min</strong>
+              <small>Fastest ready</small>
+            </span>
+            <span>
+              <strong>{STORES.filter((s) => s.deposit === 0).length}</strong>
+              <small>Free pickup</small>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <div className="explore-toolbar">
+        <div className="chips" role="tablist" aria-label="Store type">
+          {STORE_FILTERS.map((f) => (
+            <button
+              key={f}
+              type="button"
+              role="tab"
+              aria-selected={filter === f}
+              className={`chip${filter === f ? ' is-active' : ''}`}
+              onClick={() => changeFilter(f)}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="explore-tools">
           <div className="view-toggle" role="group" aria-label="View">
             <button type="button" className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-pressed={view === 'list'}>
               <List size={15} /> List View
@@ -147,21 +236,6 @@ function Explore() {
           </div>
           <FiltersPopover sort={sort} setSort={setSort} freeOnly={freeOnly} setFreeOnly={setFreeOnly} />
         </div>
-      </div>
-
-      <div className="chips" role="tablist" aria-label="Store type">
-        {STORE_FILTERS.map((f) => (
-          <button
-            key={f}
-            type="button"
-            role="tab"
-            aria-selected={filter === f}
-            className={`chip${filter === f ? ' is-active' : ''}`}
-            onClick={() => changeFilter(f)}
-          >
-            {f}
-          </button>
-        ))}
       </div>
 
       {results.length === 0 ? (

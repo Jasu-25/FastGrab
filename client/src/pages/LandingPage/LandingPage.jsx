@@ -36,6 +36,8 @@ import {
 import Logo from '../../components/Logo.jsx'
 import { AppleIcon, PlayStoreIcon } from '../../components/BrandIcons.jsx'
 import QueueIllustration from './QueueIllustration.jsx'
+import Photo from '../../components/Photo.jsx'
+import { storePhoto } from '../../data/photos.js'
 import './LandingPage.css'
 
 // ---------- Static content (will come from the API later) ----------
@@ -50,11 +52,11 @@ const CATEGORIES = [
 ]
 
 const STORES = [
-  { name: 'GreenGrocer Central', description: 'Fresh organic produce, dairy and pantry essentials', rating: 4.8, reviews: '2.4k', readyIn: '20 m', distance: '0.4 km', nextSlot: '14:30', tag: 'Free Pickup', icon: ShoppingBasket, tone: 'green' },
-  { name: "Baker's Corner", description: 'Artisan sourdough, pastries and morning coffee', rating: 4.9, reviews: '1.8k', readyIn: '15 m', distance: '1.2 km', nextSlot: '14:15', tag: '₹20 deposit', icon: Croissant, tone: 'orange' },
-  { name: 'Urban Mart', description: 'Household supplies, toiletries and general goods', rating: 4.6, reviews: '3k', readyIn: '45 m', distance: '0.8 km', nextSlot: '15:00', tag: 'Free Pickup', icon: Store, tone: 'teal' },
-  { name: 'Metro Pharmacy', description: 'Medicines, wellness and personal care', rating: 4.7, reviews: '980', readyIn: '10 m', distance: '0.7 km', nextSlot: '14:10', tag: 'Free Pickup', icon: Pill, tone: 'red' },
-  { name: 'Chai & Co.', description: 'Fresh brews, snacks and grab-and-go breakfast', rating: 4.5, reviews: '640', readyIn: '10 m', distance: '0.6 km', nextSlot: '14:05', tag: 'Free Pickup', icon: CupSoda, tone: 'blue' },
+  { name: 'GreenGrocer Central', image: storePhoto('greengrocer-central'), description: 'Fresh organic produce, dairy and pantry essentials', rating: 4.8, reviews: '2.4k', readyIn: '20 m', distance: '0.4 km', nextSlot: '14:30', tag: 'Free Pickup', icon: ShoppingBasket, tone: 'green' },
+  { name: "Baker's Corner", image: storePhoto('bakers-corner'), description: 'Artisan sourdough, pastries and morning coffee', rating: 4.9, reviews: '1.8k', readyIn: '15 m', distance: '1.2 km', nextSlot: '14:15', tag: '₹20 deposit', icon: Croissant, tone: 'orange' },
+  { name: 'Urban Mart', image: storePhoto('urban-mart'), description: 'Household supplies, toiletries and general goods', rating: 4.6, reviews: '3k', readyIn: '45 m', distance: '0.8 km', nextSlot: '15:00', tag: 'Free Pickup', icon: Store, tone: 'teal' },
+  { name: 'Metro Pharmacy', image: storePhoto('metro-pharmacy'), description: 'Medicines, wellness and personal care', rating: 4.7, reviews: '980', readyIn: '10 m', distance: '0.7 km', nextSlot: '14:10', tag: 'Free Pickup', icon: Pill, tone: 'red' },
+  { name: 'Chai & Co.', image: storePhoto('chai-and-co'), description: 'Fresh brews, snacks and grab-and-go breakfast', rating: 4.5, reviews: '640', readyIn: '10 m', distance: '0.6 km', nextSlot: '14:05', tag: 'Free Pickup', icon: CupSoda, tone: 'blue' },
 ]
 
 const STATS = [
@@ -262,7 +264,7 @@ function StoreCard({ store }) {
   return (
     <button type="button" className="store-card">
       <div className={`store-card__media tone-${store.tone}`}>
-        <Icon size={56} strokeWidth={1.25} aria-hidden="true" />
+        <Photo src={store.image} alt={`${store.name} storefront`} fallback={<Icon size={56} strokeWidth={1.25} aria-hidden="true" />} />
         <span className="store-card__rating">
           <Star size={13} fill="currentColor" strokeWidth={0} />
           {store.rating} <span>({store.reviews})</span>

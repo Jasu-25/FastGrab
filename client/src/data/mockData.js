@@ -2,6 +2,7 @@
 // Shapes here are a good starting point for the Mongoose models.
 
 import { isoDate } from '../utils/format.js'
+import { productPhoto, storePhoto } from './photos.js'
 
 export const DEFAULT_USER = {
   firstName: 'Priya',
@@ -15,7 +16,7 @@ export const DEFAULT_USER = {
 
 export const STORE_FILTERS = ['All Stores', 'Supermarkets', 'Bakeries', 'Organic', 'Pharmacies', 'Cafes']
 
-export const STORES = [
+const STORE_LIST = [
   {
     id: 'greengrocer-central',
     name: 'GreenGrocer Central',
@@ -158,7 +159,17 @@ export const STORES = [
   },
 ]
 
-const p = (id, name, detail, price, emoji, category) => ({ id, name, detail, price, emoji, category })
+export const STORES = STORE_LIST.map((s) => ({ ...s, image: storePhoto(s.id) }))
+
+const p = (id, name, detail, price, emoji, category) => ({
+  id,
+  name,
+  detail,
+  price,
+  emoji,
+  category,
+  image: productPhoto(id),
+})
 
 export const PRODUCTS = {
   'greengrocer-central': [
@@ -240,7 +251,15 @@ export const DEFAULT_SAVED_SHOPS = ['greengrocer-central', 'bakers-corner', 'nat
 /** Copy product details into the order so later price changes don't affect it. */
 export function snapshotItem(storeId, productId, qty) {
   const product = getProduct(storeId, productId)
-  return { productId, name: product.name, detail: product.detail, emoji: product.emoji, price: product.price, qty }
+  return {
+    productId,
+    name: product.name,
+    detail: product.detail,
+    emoji: product.emoji,
+    image: product.image,
+    price: product.price,
+    qty,
+  }
 }
 
 function at(dayOffset, hhmm) {

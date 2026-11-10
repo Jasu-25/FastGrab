@@ -21,6 +21,8 @@ import StoreLogo from '../components/StoreLogo.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import { TRACK_STEPS } from '../components/orderStatus.js'
 import './Orders.css'
+import Photo from '../../../components/Photo.jsx'
+import { productPhoto } from '../../../data/photos.js'
 
 const STEP_ICONS = {
   placed: ClipboardList,
@@ -140,7 +142,9 @@ function OrderDetails() {
           <ul className="line-items">
             {order.items.map((item) => (
               <li key={item.productId} className="detail-item">
-                <span className="detail-item__img" aria-hidden="true">{item.emoji}</span>
+                <span className="detail-item__img">
+                  <Photo src={item.image || productPhoto(item.productId, 160)} alt={item.name} fallback={item.emoji} />
+                </span>
                 <div>
                   <strong>{item.name}</strong>
                   <small>

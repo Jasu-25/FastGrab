@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Clock, Star } from 'lucide-react'
 import { StoreIcon } from './StoreLogo.jsx'
+import Photo from '../../../components/Photo.jsx'
 import { formatPrice } from '../../../utils/format.js'
 import { nextSlotShort } from '../../../utils/slots.js'
 
@@ -9,7 +10,7 @@ function StoreCard({ store, compact = false }) {
   return (
     <Link to={`/customer/store/${store.id}`} className={`shop-card${compact ? ' shop-card--compact' : ''}`}>
       <div className={`shop-card__media tone-${store.tone}`}>
-        <StoreIcon store={store} size={compact ? 36 : 52} />
+        <Photo src={store.image} alt={`${store.name} storefront`} fallback={<StoreIcon store={store} size={compact ? 36 : 52} />} />
         <span className="shop-card__rating">
           <Star size={12} fill="currentColor" strokeWidth={0} />
           {store.rating}

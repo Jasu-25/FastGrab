@@ -80,7 +80,12 @@ FastGrab/
 │   │       ├── Customer/    # login, signup + app pages:
 │   │       │                #   /customer/explore, /recommended, /store/:id, /orders, /orders/:id,
 │   │       │                #   /settings, /cart, /checkout/pickup, /checkout/payment
-│   │       └── Merchant/    # /merchant/login, /merchant/signup (3 steps)
+│   │       └── Merchant/    # login, 3-step signup + shop dashboard:
+│   │                        #   /merchant/dashboard, /active-orders, /orders, /orders/:id,
+│   │                        #   /inventory, /inventory/new, /slots, /offers, /offers/new, /payments, /settings
+│   │       └── Admin/       # /admin/login (not linked anywhere: type the URL) + console:
+│   │                        #   /admin/overview, /approvals, /shops, /shops/:id, /users, /users/:id,
+│   │                        #   /transactions, /admins (admin management)
 │   ├── index.html
 │   ├── vite.config.js   # dev server on :5173, proxies /api → :5000
 │   └── package.json

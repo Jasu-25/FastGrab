@@ -284,7 +284,6 @@
 .profile__link.active {
   background: var(--color-accent-soft);
   color: var(--color-primary);
-  box-shadow: inset 3px 0 0 var(--color-accent);
 }
 
 .profile__link.active svg {
@@ -378,35 +377,6 @@
   text-decoration: underline;
 }
 
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 280px;
-  max-width: 100%;
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-text-faint);
-}
-
-.search-box:focus-within {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-soft);
-}
-
-.search-box input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  outline: none;
-  background: none;
-  color: var(--color-text);
-  font-size: 14px;
-}
-
 /* ---------- Generic card ---------- */
 .card {
   border: 1px solid var(--color-border);
@@ -438,14 +408,6 @@
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 20px;
-}
-
-.muted {
-  color: var(--color-text-muted);
-}
-
-.small {
-  font-size: 13px;
 }
 
 /* ---------- Pills & status badges ---------- */
@@ -683,27 +645,6 @@
   color: var(--color-text);
 }
 
-.add-btn {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 0;
-  border-radius: var(--radius-md);
-  background: var(--color-accent);
-  color: var(--color-white);
-  box-shadow: var(--shadow-accent);
-  transition: background-color 0.15s, transform 0.15s;
-}
-
-.add-btn:hover {
-  background: var(--color-accent-hover);
-}
-
-.add-btn:active {
-  transform: scale(0.94);
-}
-
 /* ---------- Quantity stepper ---------- */
 .qty {
   display: inline-flex;
@@ -777,40 +718,6 @@
 }
 
 /* ---------- Summary rows (cart, payment, order) ---------- */
-.sum-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
-  font-size: 14px;
-  color: var(--color-text-muted);
-}
-
-.sum-row strong {
-  color: var(--color-text);
-  font-weight: 700;
-}
-
-.sum-row--total {
-  margin-top: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.sum-row--total strong {
-  font-size: 18px;
-}
-
-.text-green {
-  color: var(--color-accent) !important;
-}
-
-.text-orange {
-  color: #e2730f !important;
-}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
@@ -875,4 +782,31 @@
   background:
     radial-gradient(ellipse 60% 260px at 85% 0%, rgba(19, 184, 134, 0.1), transparent 70%),
     linear-gradient(180deg, #eaf6f0 0, var(--color-bg) 300px);
+}
+
+/* Very small phones: compact checkout header */
+@media (max-width: 400px) {
+  .cx-nav__inner {
+    gap: 8px;
+  }
+
+  .checkout-steps {
+    gap: 4px;
+  }
+
+  .checkout-steps__line {
+    width: 8px;
+  }
+
+  .profile__chevron {
+    display: none;
+  }
+
+  .profile__trigger {
+    padding: 3px;
+  }
+
+  .profile__menu {
+    width: min(270px, calc(100vw - 24px));
+  }
 }

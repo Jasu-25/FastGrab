@@ -85,12 +85,12 @@ function SlotPicker({ group }) {
 }
 
 function Pickup() {
-  const { cartGroups } = useCustomer()
+  const { checkoutGroups } = useCustomer()
   const navigate = useNavigate()
 
-  if (cartGroups.length === 0) return <Navigate to="/customer/cart" replace />
+  if (checkoutGroups.length === 0) return <Navigate to="/customer/cart" replace />
 
-  const allChosen = cartGroups.every((g) => g.slot)
+  const allChosen = checkoutGroups.every((g) => g.slot)
 
   return (
     <div className="container">
@@ -99,14 +99,14 @@ function Pickup() {
       </Link>
       <div className="page-head">
         <div>
-          <h1 className="page-title">Choose Pickup Slots</h1>
-          <p className="page-sub">Pick a time for each shop. Your order will be packed and waiting at the counter.</p>
+          <h1 className="page-title">Choose a Pickup Slot</h1>
+          <p className="page-sub">Pick a time to collect. Your order will be packed and waiting at the counter.</p>
         </div>
       </div>
 
       <div className="checkout-layout">
         <div className="checkout-main">
-          {cartGroups.map((g) => (
+          {checkoutGroups.map((g) => (
             <SlotPicker key={g.store.id} group={g} />
           ))}
         </div>
@@ -114,7 +114,7 @@ function Pickup() {
         <aside className="card card-pad summary">
           <h2 className="summary__title">Pickup Plan</h2>
           <ul className="plan-list">
-            {cartGroups.map((g) => (
+            {checkoutGroups.map((g) => (
               <li key={g.store.id}>
                 <StoreLogo store={g.store} size={32} />
                 <div>

@@ -461,3 +461,26 @@
     font-size: 20px;
   }
 }
+
+.merchant-success__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .merchant-topbar__inner > p {
+    font-size: 0;
+  }
+
+  .merchant-topbar__inner > p .link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .merchant-topbar .logo__badge {
+    display: none;
+  }
+}

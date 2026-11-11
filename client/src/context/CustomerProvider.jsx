@@ -21,6 +21,8 @@ function CustomerProvider({ children }) {
   const [savedShops, setSavedShops] = usePersistentState('fg.savedShops', DEFAULT_SAVED_SHOPS)
   const [locations, setLocations] = usePersistentState('fg.locations', DEFAULT_LOCATIONS)
   const [promoApplied, setPromoApplied] = useState(false)
+  // Which shop's cart is being checked out (one shop per order).
+  const [checkoutStoreId, setCheckoutStoreId] = usePersistentState('fg.checkoutStore', null)
   const [mockOrders] = useState(buildMockOrders)
 
   const value = useMemo(() => {
@@ -78,6 +80,16 @@ function CustomerProvider({ children }) {
     const cartSubtotal = cartGroups.reduce((n, g) => n + g.subtotal, 0)
     const cartDeposit = cartGroups.reduce((n, g) => n + g.deposit, 0)
 
+    // Checkout covers one shop at a time. Falls back to the first shop in the cart.
+    const selectedStoreId = cartGroups.some((g) => g.store.id === checkoutStoreId)
+      ? checkoutStoreId
+      : cartGroups[0]?.store.id ?? null
+    const checkoutGroups = cartGroups.filter((g) => g.store.id === selectedStoreId)
+    const checkoutCount = checkoutGroups.reduce((n, g) => n + g.count, 0)
+    const checkoutSubtotal = checkoutGroups.reduce((n, g) => n + g.subtotal, 0)
+    const checkoutDeposit = checkoutGroups.reduce((n, g) => n + g.deposit, 0)
+    const selectCheckoutStore = (storeId) => setCheckoutStoreId(storeId)
+
     const setSlot = (storeId, slot) => setSlots((prev) => ({ ...prev, [storeId]: slot }))
 
     const applyPromo = (code) => {
@@ -89,7 +101,7 @@ function CustomerProvider({ children }) {
     /** Turns the cart into one order per shop. Returns the new order IDs. */
     const placeOrders = ({ payMode, method }) => {
       const now = new Date().toISOString()
-      const newOrders = cartGroups.map((g) => {
+      const newOrders = checkoutGroups.map((g) => {
         const id = `FG-${Math.floor(1000 + Math.random() * 9000)}`
         const paidOnline = payMode === 'full' ? g.subtotal : g.deposit
         return {
@@ -112,7 +124,13 @@ function CustomerProvider({ children }) {
         }
       })
       setPlacedOrders((prev) => [...newOrders, ...prev])
-      clearCart()
+      // Remove only the checked-out shop; other shops stay in the cart.
+      const done = new Set(checkoutGroups.map((g) => g.store.id))
+      const keep = (obj) => Object.fromEntries(Object.entries(obj).filter(([id]) => !done.has(id)))
+      setCart(keep)
+      setSlots(keep)
+      setCheckoutStoreId(null)
+      if (done.size === cartGroups.length) setPromoApplied(false)
       return newOrders.map((o) => o.id)
     }
 
@@ -150,6 +168,12 @@ function CustomerProvider({ children }) {
       cartCount,
       cartSubtotal,
       cartDeposit,
+      checkoutGroups,
+      checkoutCount,
+      checkoutSubtotal,
+      checkoutDeposit,
+      selectedStoreId,
+      selectCheckoutStore,
       getQty,
       addToCart,
       setQty,
@@ -171,7 +195,7 @@ function CustomerProvider({ children }) {
     }
   }, [
     user, setUser, cart, setCart, slots, setSlots, placedOrders, setPlacedOrders, mockOrders,
-    savedShops, setSavedShops, locations, setLocations, promoApplied,
+    savedShops, setSavedShops, locations, setLocations, promoApplied, checkoutStoreId, setCheckoutStoreId,
   ])
 
   return <CustomerContext.Provider value={value}>{children}</CustomerContext.Provider>

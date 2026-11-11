@@ -19,6 +19,7 @@ import { slotLabel } from '../../../utils/slots.js'
 import { isActiveOrder } from '../components/orderStatus.js'
 import StoreCard from '../components/StoreCard.jsx'
 import { StoreIcon } from '../components/StoreLogo.jsx'
+import OffersStrip from './OffersStrip.jsx'
 import './Explore.css'
 
 const PAGE_SIZE = 8
@@ -103,16 +104,8 @@ function MapView({ stores }) {
 const nearest = [...STORES].sort((a, b) => a.distanceKm - b.distanceKm)[0]
 const fastest = [...STORES].sort((a, b) => a.prepMins - b.prepMins)[0]
 
-function getGreeting() {
-  const h = new Date().getHours()
-  if (h < 12) return 'Good morning'
-  if (h < 17) return 'Good afternoon'
-  return 'Good evening'
-}
-
 function Explore() {
-  const { user, orders } = useCustomer()
-  const [greeting] = useState(getGreeting)
+  const { orders } = useCustomer()
   const nextOrder = orders.find((o) => o.status === 'ready') ?? orders.find(isActiveOrder)
   const [filter, setFilter] = useState(STORE_FILTERS[0])
   const [query, setQuery] = useState('')
@@ -145,9 +138,6 @@ function Explore() {
           <nav className="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
             <Link to="/customer/explore">Home</Link>/<span aria-current="page">Nearby stores</span>
           </nav>
-          <p className="explore-hero__greet">
-            {greeting}, {user.firstName} 👋
-          </p>
           <h1>Discover Nearby</h1>
           <p className="explore-hero__sub">
             {results.length} shops found in <strong>Bengaluru, IN</strong> · ready in as little as 10 minutes
@@ -208,6 +198,8 @@ function Explore() {
           </div>
         </div>
       </section>
+
+      <OffersStrip />
 
       <div className="explore-toolbar">
         <div className="chips" role="tablist" aria-label="Store type">

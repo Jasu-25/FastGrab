@@ -49,3 +49,22 @@ export const dateTimeLabel = (iso) =>
   })} at ${timeOf(iso)}`
 
 export const pluralize = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
+
+/** "just now", "12 min ago", "3 h ago", "2 d ago". Pass `now` from state to keep renders pure. */
+export function timeAgo(iso, now) {
+  const mins = Math.round((now - new Date(iso).getTime()) / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins} min ago`
+  if (mins < 60 * 24) return `${Math.round(mins / 60)} h ago`
+  return `${Math.round(mins / 1440)} d ago`
+}
+
+/** Minutes from now until `iso` (negative if in the past). */
+export const minutesUntil = (iso, now) => Math.round((new Date(iso).getTime() - now) / 60000)
+
+/** ₹2.8L / ₹48.2k style short amounts for chart labels. */
+export function compactPrice(n) {
+  if (n >= 100000) return `₹${(n / 100000).toFixed(n % 100000 ? 1 : 0)}L`
+  if (n >= 1000) return `₹${(n / 1000).toFixed(n % 1000 ? 1 : 0)}k`
+  return `₹${n}`
+}

@@ -649,3 +649,121 @@ a.shop-group__name:hover {
 .review__item small {
   color: var(--color-text-faint);
 }
+
+/* ---------- One-shop checkout selection ---------- */
+.cart-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px solid #a8e6cf;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
+.cart-tip svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-accent);
+}
+
+.shop-group.is-selectable {
+  transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.shop-group.is-selectable:not(.is-selected) {
+  opacity: 0.78;
+}
+
+.shop-group.is-selectable:not(.is-selected):hover {
+  opacity: 1;
+}
+
+.shop-group.is-selected {
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 12px 30px rgba(19, 184, 134, 0.14);
+}
+
+.shop-group__pick {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-white);
+}
+
+.shop-group.is-selected .shop-group__pick {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+}
+
+.shop-group__choose {
+  padding: 7px 12px;
+  border-color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  color: var(--color-accent);
+  font-size: 12px;
+}
+
+.summary__shop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.summary__shop small {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.summary__shop strong {
+  color: var(--color-primary);
+}
+
+.summary__others {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Columns can shrink so wide rows scroll inside their card, not the page */
+.checkout-layout > *,
+.checkout-main > * {
+  min-width: 0;
+}
+
+@media (max-width: 960px) {
+  .checkout-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .line-item {
+    padding: 12px;
+  }
+
+  .shop-group__head,
+  .shop-group__foot,
+  .slot-card__body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

@@ -42,7 +42,7 @@ function methodLabel(method, f) {
 }
 
 function Payment() {
-  const { cartGroups, cartCount, cartSubtotal, cartDeposit, placeOrders } = useCustomer()
+  const { checkoutGroups, checkoutCount, checkoutSubtotal, checkoutDeposit, placeOrders } = useCustomer()
   const navigate = useNavigate()
   // Set right before the cart is emptied so the guards below don't redirect to /cart.
   const [placing, setPlacing] = useState(false)
@@ -53,11 +53,11 @@ function Payment() {
   const [errors, setErrors] = useState({})
 
   if (placing) return null
-  if (cartGroups.length === 0) return <Navigate to="/customer/cart" replace />
-  if (cartGroups.some((g) => !g.slot)) return <Navigate to="/customer/checkout/pickup" replace />
+  if (checkoutGroups.length === 0) return <Navigate to="/customer/cart" replace />
+  if (checkoutGroups.some((g) => !g.slot)) return <Navigate to="/customer/checkout/pickup" replace />
 
-  const payNow = payMode === 'full' ? cartSubtotal : cartDeposit
-  const dueLater = cartSubtotal - payNow
+  const payNow = payMode === 'full' ? checkoutSubtotal : checkoutDeposit
+  const dueLater = checkoutSubtotal - payNow
 
   const update = (name, value) => {
     setFields((f) => ({ ...f, [name]: value }))
@@ -103,7 +103,7 @@ function Payment() {
               <ShieldCheck size={22} />
               <div>
                 <strong>Nothing to pay online</strong>
-                <p>You’ll pay {formatPrice(cartSubtotal)} at the shop counter when you collect.</p>
+                <p>You’ll pay {formatPrice(checkoutSubtotal)} at the shop counter when you collect.</p>
               </div>
             </div>
           ) : (
@@ -169,7 +169,7 @@ function Payment() {
               <h2 className="card-title">Review your pickups</h2>
               <Link to="/customer/cart" className="link small">Edit cart</Link>
             </header>
-            {cartGroups.map((g) => (
+            {checkoutGroups.map((g) => (
               <div key={g.store.id} className="review__shop">
                 <div className="review__store">
                   <StoreLogo store={g.store} size={40} />
@@ -198,11 +198,11 @@ function Payment() {
         <aside className="card card-pad summary">
           <h2 className="summary__title">Payment Summary</h2>
           <div className="sum-row">
-            Subtotal ({pluralize(cartCount, 'item')}) <strong>{formatPrice(cartSubtotal)}</strong>
+            Subtotal ({pluralize(checkoutCount, 'item')}) <strong>{formatPrice(checkoutSubtotal)}</strong>
           </div>
           <div className="sum-row">
             Booking Deposit
-            <strong className={cartDeposit ? '' : 'text-green'}>{cartDeposit ? formatPrice(cartDeposit) : 'FREE'}</strong>
+            <strong className={checkoutDeposit ? '' : 'text-green'}>{checkoutDeposit ? formatPrice(checkoutDeposit) : 'FREE'}</strong>
           </div>
 
           <div className="pay-mode" role="radiogroup" aria-label="How much to pay now">
@@ -210,7 +210,7 @@ function Payment() {
               Pay in full now
             </button>
             <button type="button" role="radio" aria-checked={payMode === 'deposit'} className={payMode === 'deposit' ? 'is-active' : ''} onClick={() => setPayMode('deposit')}>
-              {cartDeposit ? 'Deposit now, rest at pickup' : 'Pay at pickup'}
+              {checkoutDeposit ? 'Deposit now, rest at pickup' : 'Pay at pickup'}
             </button>
           </div>
 

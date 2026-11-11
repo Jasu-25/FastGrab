@@ -13,6 +13,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
+import BackButton from '../../components/BackButton.jsx'
 import PasswordInput from '../../components/PasswordInput.jsx'
 import { Field } from '../../components/FormField.jsx'
 import { inputClass } from '../../utils/inputClass.js'
@@ -293,7 +294,10 @@ function MerchantSignup() {
     <div className="merchant-page">
       <header className="merchant-topbar">
         <div className="container merchant-topbar__inner">
-          <Logo badge="BUSINESS" />
+          <div className="merchant-topbar__left">
+            <BackButton to="/get-started" label="Back" className="back-btn--inline" />
+            <Logo badge="BUSINESS" />
+          </div>
           <p>
             Already a partner?{' '}
             <Link to="/merchant/login" className="link">
@@ -318,9 +322,14 @@ function MerchantSignup() {
                 Thanks, {values.fullName.split(' ')[0]}! We’ll review <strong>{values.shopName}</strong>{' '}
                 and email <strong>{values.email}</strong> within 24–48 hours.
               </p>
-              <Link to="/" className="btn btn--primary">
-                Back to home
-              </Link>
+              <div className="merchant-success__actions">
+                <Link to="/" className="btn btn--outline">
+                  Back to home
+                </Link>
+                <Link to="/merchant/dashboard" className="btn btn--primary">
+                  Preview your dashboard
+                </Link>
+              </div>
             </div>
           ) : (
             <>

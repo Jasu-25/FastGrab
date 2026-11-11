@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { CalendarCheck, CircleCheck, Mail, QrCode, Receipt, TrendingUp } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { CalendarCheck, Mail, QrCode, Receipt, TrendingUp } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
+import BackButton from '../../components/BackButton.jsx'
 import PasswordInput from '../../components/PasswordInput.jsx'
 import { Field, InputWithIcon } from '../../components/FormField.jsx'
 import { inputClass } from '../../utils/inputClass.js'
@@ -30,7 +30,7 @@ function MerchantLogin() {
     password: '',
     remember: false,
   })
-  const [submitted, setSubmitted] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -38,7 +38,7 @@ function MerchantLogin() {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
     // TODO: POST /api/auth/merchant/login
-    setSubmitted(true)
+    navigate('/merchant/dashboard')
   }
 
   return (
@@ -65,6 +65,7 @@ function MerchantLogin() {
       </aside>
 
       <main className="auth-main">
+        <BackButton to="/get-started" label="Back" />
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="auth-mobile-logo">
             <Logo size="lg" badge="BUSINESS" />
@@ -73,12 +74,6 @@ function MerchantLogin() {
           <h1 className="auth-title">Partner Login</h1>
           <p className="auth-subtitle">Welcome back. Log in to your store dashboard.</p>
 
-          {submitted && (
-            <div className="form-alert form-alert--success" role="status">
-              <CircleCheck size={18} />
-              Details look good. Login will work once the API is connected.
-            </div>
-          )}
 
           <Field label="Business Email" htmlFor="ml-email" error={errors.email}>
             <InputWithIcon icon={Mail}>

@@ -1,0 +1,112 @@
+/* ---------- Admin sign-in ---------- */
+.admin-login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.admin-login__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: var(--color-white);
+  background:
+    radial-gradient(circle at 80% 10%, rgba(63, 217, 160, 0.16), transparent 40%),
+    linear-gradient(160deg, #0f2a22 0%, #061a14 100%);
+}
+
+.admin-login__panel-inner {
+  max-width: 420px;
+}
+
+.admin-login__panel .logo__badge {
+  background: rgba(63, 217, 160, 0.16);
+  color: var(--color-accent-on-dark);
+}
+
+.admin-login__panel h2 {
+  margin-top: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.admin-login__panel p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.admin-login__panel ul {
+  display: grid;
+  gap: 12px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-login__panel li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-login__panel li svg {
+  color: var(--color-accent-on-dark);
+}
+
+.admin-login__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.admin-login__form {
+  width: 100%;
+  max-width: 420px;
+}
+
+.admin-login__mobile-logo {
+  display: none;
+  margin-bottom: 28px;
+}
+
+.admin-login__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.admin-login__form h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.admin-login__sub {
+  margin: 6px 0 28px;
+  color: var(--color-text-muted);
+}
+
+.admin-login__foot {
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--color-text-faint);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .admin-login { grid-template-columns: 1fr; }
+  .admin-login__panel { display: none; }
+  .admin-login__mobile-logo { display: block; }
+}

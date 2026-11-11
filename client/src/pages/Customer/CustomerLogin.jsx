@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { Mail } from 'lucide-react'
 import Logo from '../../components/Logo.jsx'
+import BackButton from '../../components/BackButton.jsx'
 import PasswordInput from '../../components/PasswordInput.jsx'
 import { AppleIcon, GoogleIcon } from '../../components/BrandIcons.jsx'
 import { Field, InputWithIcon } from '../../components/FormField.jsx'
@@ -66,6 +67,7 @@ function CustomerLogin() {
       </aside>
 
       <main className="auth-main">
+        <BackButton to="/get-started" label="Back" />
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="auth-mobile-logo">
             <Logo size="lg" />

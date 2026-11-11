@@ -828,3 +828,8 @@
     display: none !important;
   }
 }
+
+/* Cards never force a minimum wider than the screen */
+.order-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+}

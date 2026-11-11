@@ -1,0 +1,265 @@
+/* ---------- Pickup slots ---------- */
+.slots-default {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-body);
+}
+
+.slots-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.slots-days {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.slots-day {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.slots-day small {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.slots-day strong {
+  font-size: 18px;
+}
+
+.slots-day.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-primary);
+}
+
+.slots-day.is-active small {
+  color: var(--color-accent-on-dark);
+}
+
+.slots-stop-all {
+  background: var(--color-error-soft);
+  color: var(--color-error);
+  font-size: 14px;
+}
+
+.slots-open-all {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: 14px;
+}
+
+.slots-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-border);
+}
+
+.slots-summary > span {
+  padding: 14px 18px;
+  background: var(--color-surface);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.slots-summary strong {
+  display: block;
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+.slots-summary__bar {
+  display: block;
+  height: 6px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+}
+
+.slots-summary__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+}
+
+.slots-panel {
+  overflow: hidden;
+}
+
+.slots-periods {
+  margin: 16px 20px;
+}
+
+.slot-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot-row {
+  display: grid;
+  grid-template-columns: 42px 170px minmax(140px, 1fr) auto 118px;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-border);
+  transition: background-color 0.15s;
+}
+
+.slot-row:hover {
+  background: #f8fbfa;
+}
+
+.slot-row--stopped {
+  background: #fafbfb;
+}
+
+.slot-row__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.slot-row--stopped .slot-row__icon {
+  background: var(--color-surface-muted);
+  color: var(--color-text-faint);
+}
+
+.slot-row__time {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+}
+
+.slot-row__time strong {
+  font-size: 16px;
+  color: var(--color-primary);
+}
+
+.slot-row--stopped .slot-row__time strong {
+  color: var(--color-text-faint);
+}
+
+.slot-pill--open { background: var(--color-accent-soft); color: var(--color-accent); }
+.slot-pill--busy { background: #fff4e0; color: #b16b03; }
+.slot-pill--full { background: var(--color-error-soft); color: var(--color-error); }
+.slot-pill--stopped { background: var(--color-surface-muted); color: var(--color-text-muted); }
+
+.slot-row__nums {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.slot-row__nums strong {
+  color: var(--color-primary);
+}
+
+.slot-row__bar {
+  display: block;
+  height: 7px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+}
+
+.slot-row__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+  transition: width 0.3s;
+}
+
+.slot-row--busy .slot-row__bar span { background: #f59e0b; }
+.slot-row--full .slot-row__bar span { background: var(--color-error); }
+.slot-row--stopped .slot-row__bar span { background: var(--color-border-strong); }
+
+.slot-row__max {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.slot-stop {
+  border: 1px solid #fca5a5;
+  background: var(--color-surface);
+  color: var(--color-error);
+}
+
+.slot-stop:hover {
+  background: var(--color-error-soft);
+}
+
+@media (max-width: 1080px) {
+  .slot-row {
+    grid-template-columns: 42px 1fr auto;
+    gap: 12px 16px;
+  }
+
+  .slot-row__load {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .slot-row__max {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .slot-row > .btn {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .slots-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .slot-row__max span {
+    display: none;
+  }
+}
